@@ -27,10 +27,10 @@ const HeroSection = () => {
    }, []);
 
   return (
-    <section className="w-full pt-36 md:pt-48 pb-10">
+    <section className="w-full pt-36 md:pt-35 pb-10">
         <div className="space-y-6 text-center">
             <div className="space-y-6 mx-auto">
-                <h1 className="text-5xl font-bold md:text-6xl lg:text-7xl xl:text-8xl gradient-title">
+                <h1 className="text-4xl font-bold md:text-5xl lg:text-6xl xl:text-7xl gradient-title">
                     Your AI Career Coach for <br />
                     Professional Success
                 </h1>
