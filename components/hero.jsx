@@ -35,7 +35,7 @@ const HeroSection = () => {
                     Professional Success
                 </h1>
                 <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius quaerat nemo harum consequatur.
+                Advance your career with personalized guidance, interview prep, and AI-powered tools for job success.
                 </p>
             </div>
 

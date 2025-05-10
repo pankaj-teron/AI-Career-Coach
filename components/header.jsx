@@ -18,7 +18,7 @@ import {
 } from './ui/dropdown-menu';
 import { checkUser } from '@/lib/checkUser';
 
-const Header = async() => {
+const Header = async () => {
   await checkUser();
 
   return (
@@ -35,8 +35,8 @@ const Header = async() => {
 
         <div className='flex items-center space-x-2 md:space-x-4'>
           <SignedIn>
-            <Link href={"/dashboad"}>
-              <Button variant="outline" className='hidden md:block'>
+            <Link href={"/dashboard"}>
+              <Button variant="outline" className='hidden md:inline-flex items-center gap-2'>
                 <LayoutDashboard className='h-4 w-4' />
                  Industry Insights
               </Button> 
