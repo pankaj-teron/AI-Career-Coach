@@ -89,7 +89,7 @@ const OnboardingForm = ({ industries }) => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            <div className="space-y-2">
+            <div className="space-y-4">
               <Label htmlFor="industry">Industry</Label>
               <Select
                 onValueChange={(value) => {
