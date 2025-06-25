@@ -2,9 +2,16 @@ import { getAssessments } from "@/actions/interview";
 import StatsCards from "./_components/stats-cards";
 import PerformanceChart from "./_components/performance-chart";
 import QuizList from "./_components/quiz-list";
+import { getUserOnboardingStatus } from "@/actions/user";
+import { redirect } from "next/navigation";
 
 const InterviewPage = async () => {
   const assessments = await getAssessments();
+
+  const { isOnboarded } = await getUserOnboardingStatus();
+  if (!isOnboarded) {
+    redirect("/onboarding");
+  }
 
   return (
     <div>

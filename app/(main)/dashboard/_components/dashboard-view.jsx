@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   BriefcaseIcon,
@@ -19,9 +19,36 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+
+const ROLE_SHORT_NAMES = {
+  "Software Engineer": "SE",
+  "Data Scientist": "DS",
+  "Frontend Developer": "FED",
+  "Backend Developer": "BED",
+  "DevOps Engineer": "DE",
+  "Mobile App Developer": "MAD",
+  // Add more mappings as needed
+};
 
 const DashboardView = ({ insights }) => {
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const checkScreen = () => setIsSmallScreen(window.innerWidth < 768);
+    checkScreen();
+    window.addEventListener("resize", checkScreen);
+    return () => window.removeEventListener("resize", checkScreen);
+  }, []);
+
   // Transform salary data for the chart
   const salaryData = insights.salaryRanges.map((range) => ({
     name: range.role,
@@ -149,14 +176,23 @@ const DashboardView = ({ insights }) => {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={salaryData}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
+                <XAxis
+                  dataKey="name"
+                  tickFormatter={(name) =>
+                    isSmallScreen ? ROLE_SHORT_NAMES[name] || name : name
+                  }
+                />
                 <YAxis />
                 <Tooltip
                   content={({ active, payload, label }) => {
                     if (active && payload && payload.length) {
                       return (
                         <div className="bg-background border rounded-lg p-2 shadow-md">
-                          <p className="font-medium">{label}</p>
+                          <p className="font-medium">
+                            {isSmallScreen
+                              ? ROLE_SHORT_NAMES[label] || label
+                              : label}
+                          </p>
                           {payload.map((item) => (
                             <p key={item.name} className="text-sm">
                               {item.name}: ${item.value}K
