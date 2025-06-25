@@ -7,7 +7,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-export async function generateCoverLetter(id, content) {
+export async function generateCoverLetter(data) {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
 
@@ -121,29 +121,26 @@ export async function deleteCoverLetter(id) {
   });
 }
 
-export async function saveCoverLetter({
-  content,
-  jobDescription,
-  companyName,
-  jobTitle,
-}) {
+export async function saveCoverLetter({ id, content }) {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
 
   const user = await db.user.findUnique({
     where: { clerkUserId: userId },
   });
-
   if (!user) throw new Error("User not found");
 
-  return await db.coverLetter.create({
+  if (!id) throw new Error("Cover letter ID is missing");
+  if (!content) throw new Error("Content is missing");
+
+  return await db.coverLetter.update({
+    where: {
+      id,
+      userId: user.id,
+    },
     data: {
       content,
-      jobDescription,
-      companyName,
-      jobTitle,
-      status: "completed",
-      userId: user.id,
+      status: "completed", // optional
     },
   });
 }

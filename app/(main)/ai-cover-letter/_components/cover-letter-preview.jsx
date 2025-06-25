@@ -14,10 +14,14 @@ const CoverLetterPreview = ({ content, id }) => {
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      await saveCoverLetter(id, previewContent);
+      await saveCoverLetter({
+        id, // ✅ Pass the existing cover letter ID
+        content: previewContent,
+      });
       toast.success("Cover letter saved successfully!");
     } catch (error) {
       toast.error("Failed to save cover letter");
+      console.error(error);
     } finally {
       setIsSaving(false);
     }
@@ -54,17 +58,6 @@ const CoverLetterPreview = ({ content, id }) => {
             height={700}
             preview="edit"
           />
-        </div>
-        <div className="hidden">
-          <div id="cover">
-            <MDEditor.Markdown
-              source={previewContent}
-              style={{
-                background: "white",
-                color: "black",
-              }}
-            />
-          </div>
         </div>
       </div>
     </div>
